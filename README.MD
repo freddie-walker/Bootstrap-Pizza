@@ -9,4 +9,6 @@ Dieses Projekt dient dazu, Bootstrap zu erlernen. Es wird ein kleines Pizza-Best
 
 Viel Erfolg, 
 
-Euer Coach Alfred   
+Euer Coach Alfred 
+
+![Screenshot](img/Pizza-App.png)
