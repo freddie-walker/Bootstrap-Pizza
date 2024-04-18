@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Danke für Ihre Bestellung</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <link rel="icon" href="img/pizza.png">
+  <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="js/handlebars.min-v4.7.8.js"></script>
+  <script src="js/vanilla.js"></script>
+  <script>
+    function init() {
+      const pizzen = localStorage.getItem(PIZZA_KEY)
+      if (pizzen) {
+        const pizzenData = {pizzen: JSON.parse(pizzen)}
+        render(pizzenData)
+      } else {
+
+      }
+    }
+  </script>
+
+</head>
+
+<body onload="init()">
+<h1>
+  Danke für Ihre Bestellung
+</h1>
+
+Sie haben folgende Pizzen bestellt:
+<script type="text/x-handlebars-template">
+  <ol>
+    {{#pizzen}}
+      <li>{{this}}</li>
+    {{/pizzen}}
+  </ol>
+</script>
+<div></div>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Pizza-Bestellung mit Bootstrap 5</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+  <link rel="icon" href="img/pizza.png">
+  <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
+
+  <script src="js/bootstrap.js" crossorigin="anonymous" defer></script>
+  <script src="js/vanilla.js"></script>
+
+  <script>
+    function init() {
+      const form = $('.needs-validation')
+
+      form.addEventListener('submit', event => {
+        if (!validateCheckboxes() || !form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        zumWarenkorb(event)
+        form.classList.add('was-validated')
+      }, false)
+    }
+
+    function validateCheckboxes() {
+      const checkBoxes = $$('input[type="checkbox"]')
+
+      if ($$('input:checked').length === 0) {
+        checkBoxes.forEach(cb => cb.classList.add('is-invalid'))
+        return false
+      } else {
+        checkBoxes.forEach(cb => cb.classList.remove('is-invalid'))
+      }
+      return true
+    }
+
+    function zumWarenkorb(event) {
+      const pizzen = $$('input:checked')
+      const pizzaNamen = pizzen.map(pizza => pizza.parentNode.innerText.trim())
+      localStorage.setItem(PIZZA_KEY, JSON.stringify(pizzaNamen))
+    }
+  </script>
+
+</head>
+
+<body onload="init()">
+<main class="container">
+  <h1>Pizza-Bestellung mit Bootstrap 5</h1>
+
+  <form class="row col-7 needs-validation" novalidate action="danke.html">
+    <div class="col col-sm-12">
+      <h5 class="mt-3">Bitte wählen Sie Ihre Pizzen aus:</h5>
+
+      <div class="row row-cols-4 g-4">
+        <div class="col">
+          <div class="card h-100">
+            <label role="button">
+              <img class="card-img-top" alt="Margherita"
+                   src="https://img.chefkoch-cdn.de/rezepte/1002961205505361/bilder/1051045/crop-360x240/pizza-margherita-nach-italienischer-art.jpg">
+              <div class="card-body">
+                <div class="card-title h5 text-nowrap">
+                  <input type="checkbox" class="form-check-input" value="Margherita">&nbsp;Margherita
+                  <div class="invalid-feedback">Bitte auswählen</div>
+                </div>
+                <div class="card-text">
+                  mit Mozzarella, Basilikum
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100">
+            <label role="button">
+              <img class="card-img-top" alt="Salami"
+                   src="https://img.chefkoch-cdn.de/rezepte/2208991353880175/bilder/1051049/crop-360x240/pizza-salami-mozzarella.jpg">
+              <div class="card-body">
+                <div class="card-title h5 text-nowrap">
+                  <input type="checkbox" class="form-check-input" value="Salami">&nbsp;Salami
+                  <div class="invalid-feedback">Bitte auswählen</div>
+                </div>
+                <div class="card-text">
+                  mit Salami
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100">
+            <label role="button">
+              <img class="card-img-top" alt="Funghi"
+                   src="https://img.chefkoch-cdn.de/rezepte/583301157458907/bilder/1167301/crop-360x240/pizza-al-funghi-e-pancetta.jpg">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="list-group-item">
+                    <input type="checkbox" class="form-check-input" value="Funghi">&nbsp; Funghi
+                    <div class="invalid-feedback">Bitte auswählen</div>
+                  </div>
+                </h5>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card h-100">
+            <label role="button">
+              <img class="card-img-top" alt="Capricciosa"
+                   src="https://rezept-db.womenshealth.de/image/rezept-db/jsonLd4x3/sh_Marzia-Giacobbe_172628543_Pizza-Capricciosa_Belag_Rezept_800x462.jpg.webp">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="list-group-item">
+                    <input type="checkbox" class="form-check-input" value="Capricciosa">&nbsp;Capricciosa
+                    <div class="invalid-feedback">Bitte auswählen</div>
+                  </div>
+                </h5>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <h5 class="mt-4">Lieferung an:</h5>
+
+      <div class="col-7">
+        <fieldset class="input-group mb-3">
+          <span class="input-group-text col-4 has-validation">Name</span>
+          <input type="text" class="form-control" id="name" placeholder="Vorname Nachname" required>
+          <div class="invalid-feedback">Bitte geben Sie Ihren Namen ein.</div>
+        </fieldset>
+        <fieldset class="form-floating mb-3">
+          <input type="text" class="form-control" id="adresse" placeholder="Straße Nr, Ort" required>
+          <label for="adresse">Lieferadresse</label>
+          <div class="invalid-feedback">Bitte geben Sie die Lieferadresse an.</div>
+        </fieldset>
+        <fieldset class="input-group mb-3">
+          <span class="input-group-text col-4">Telefon</span>
+          <input type="tel" pattern="[0-9 \-]{7,15}" class="form-control" id="telefon" placeholder="z.B. 0177-3003399" required>
+          <div class="invalid-feedback">Bitte geben Sie ihre Telefonnummer für Rückfragen an.</div>
+        </fieldset>
+
+        <button type="button" class="btn btn-secondary" id="abbrechen">Abbrechen</button>
+        <button type="submit" class="btn btn-primary float-end" id="bestellen">Bestellen</button>
+      </div>
+    </div>
+  </form>
+</main>
+</body>
+</html>
