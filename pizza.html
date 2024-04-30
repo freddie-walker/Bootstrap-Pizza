@@ -1,0 +1,21 @@
+{{#each this}}
+<div class="col">
+  <div class="card h-100">
+    <label role="button" for="{{name}}">
+      <img class="card-img-top" alt="{{name}}"
+           src="img/{{bild}}">
+      <div class="card-body p-2">
+        <div class="card-title h5 text-truncate">
+          <input type="checkbox" id="{{name}}" class="form-check-input" value="{{name}}">&nbsp;{{name}}
+          <div class="invalid-feedback">Bitte wählen</div>
+        </div>
+        <div class="card-text">mit
+          {{#each zutaten}}
+          {{this}}{{#unless @last}}, {{/unless}}
+          {{/each}}
+        </div>
+      </div>
+    </label>
+  </div>
+</div>
+{{/each}}

@@ -20,13 +20,36 @@ const $on = (element, event, func) => {
   return element
 }
 
-const render =  (data) => {
+/**
+ *
+ * @param pizzen
+ * @returns {Promise<void>}
+ */
+const render = async (pizzen) => {
   const templates = $$('[type="text/x-handlebars-template"]')
 
-  for(const source of templates) {
+  for (const source of templates) {
+    await loadPartials(source)
     const template = Handlebars.compile(source.innerHTML)
-    const target = source.nextElementSibling
-    target.innerHTML = template(data)
+    const target = source.parentElement
+    target.insertAdjacentHTML('beforeend', template(pizzen))
+  }
+}
+
+/**
+ *
+ * @param source
+ * @returns {Promise<void>}
+ */
+async function loadPartials(source) {
+  const partialNames = source.innerText.match(/(?<={{>)(.*?)(?=\s|}})/g)
+  if (partialNames) {
+    for (let name of partialNames) {
+      name = name.trim()
+      const fileName = name + '.html'
+      const partialCode = await fetch(fileName).then(response => response.text())
+      Handlebars.registerPartial(name, partialCode)
+    }
   }
 }
 
