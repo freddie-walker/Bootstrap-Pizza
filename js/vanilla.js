@@ -7,11 +7,11 @@ const $ = query => document.querySelector(query)
 const $$ = query => Array.from(document.querySelectorAll(query))
 
 /**
- *
- * @param element
- * @param event
- * @param func
- * @returns {*}
+ * Bindet einen Event-Handler (=Funktion) an ein DOM-Element
+ * @param element - das Ziel-Element, z.B. Button
+ * @param event - das Event, z.B. 'click'
+ * @param func - die aufzurufende Funktion, z.B. handleValidation
+ * @returns {*} - das Ziel-Element
  */
 const $on = (element, event, func) => {
   Array.isArray(element)
@@ -21,28 +21,28 @@ const $on = (element, event, func) => {
 }
 
 /**
- *
- * @param pizzen
+ * Durchläuft das HTML-Dokument und rendert sämtliche Handlebars-Script-Tags
+ * @param data - die zu rendernden Daten
  * @returns {Promise<void>}
  */
-const render = async (pizzen) => {
+const render = async (data) => {
   const templates = $$('[type="text/x-handlebars-template"]')
 
   for (const source of templates) {
     await loadPartials(source)
     const template = Handlebars.compile(source.innerHTML)
     const target = source.parentElement
-    target.insertAdjacentHTML('beforeend', template(pizzen))
+    target.insertAdjacentHTML('beforeend', template(data))
   }
 }
 
 /**
- *
- * @param source
+ * Lädt Partials mit der Datei-Endung '.html' aus dem gleichen Verzeichnis
+ * @param code - der zu parsende Source-Code
  * @returns {Promise<void>}
  */
-async function loadPartials(source) {
-  const partialNames = source.innerText.match(/(?<={{>)(.*?)(?=\s|}})/g)
+async function loadPartials(code) {
+  const partialNames = code.innerText.match(/(?<={{(#>|>)).+?(?=\s)/g)
   if (partialNames) {
     for (let name of partialNames) {
       name = name.trim()

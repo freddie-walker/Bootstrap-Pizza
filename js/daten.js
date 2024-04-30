@@ -1,8 +1,9 @@
-const pizzen = [{
-  name: "Margherita",
-  bild: "pizza-margherita-nach-italienischer-art.jpg",
-  zutaten: ["Mozarella", "Basilikum"]
-},
+const PIZZEN = [
+  {
+    name: "Margherita",
+    bild: "pizza-margherita-nach-italienischer-art.jpg",
+    zutaten: ["Mozarella", "Basilikum"]
+  },
   {
     name: "Salami",
     bild: "pizza-salami-mozzarella.jpg",

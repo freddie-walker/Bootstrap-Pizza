@@ -27,8 +27,7 @@
         form.classList.add('was-validated')
       }, false)
 
-      render(pizzen)
-
+      render(PIZZEN)
     }
 
     function validateCheckboxes() {
@@ -57,8 +56,10 @@
 <main class="container">
   <div>
     <script type="text/x-handlebars-template">
-      {{>navbar}}
-  </script>
+      {{#> navbar Bestellung='active'}}
+        Partial-Block Inhalt
+      {{/navbar}}
+    </script>
   </div>
   <h1>Pizza-Bestellung mit Bootstrap 5</h1>
 
@@ -68,9 +69,8 @@
     <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1
     g-3 mt-0">
       <script type="text/x-handlebars-template">
-        {{>pizza }}
+        {{> pizza }}
       </script>
-
     </div>
 
     <h5 class="mt-4">Lieferung an:</h5>
